@@ -1,20 +1,16 @@
-pipeline {
-    agent any
-    stages {
-        stage('Setup Node.js') {
-            steps {
-                sh '''
-                curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-                sudo apt-get install -y nodejs
-                node -v
-                npm -v
-                '''
-            }
+stage('npm-build') {
+    agent {
+        docker {
+            image 'node:7.4'
         }
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
+    }
+
+    steps {
+        echo "Branch is ${env.main}..."
+
+        withNPM(npmrcConfig:'my-custom-npmrc') {
+            echo "Performing npm build..."
+            sh 'npm install'
         }
     }
 }
