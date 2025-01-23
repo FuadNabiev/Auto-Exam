@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'npm install' 
+                sh '/var/jenkins_home/npm install' 
             }
         }
     }
