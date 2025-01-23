@@ -1,10 +1,14 @@
-pipeline {
-    agent any
-    stages {
-        stage('Build') { 
-            steps {
-                sh '/var/jenkins_home/npm install' 
-            }
+pipeline {                                                                                                       
+     agent {
+        docker {
+          image 'node:10.11.0-alpine'
         }
-    }
-}
+     }
+     stages {
+        stage ("Build") {
+           steps {
+              sh "npm install"
+           }
+        }
+     }
+  }
